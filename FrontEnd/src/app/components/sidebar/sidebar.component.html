@@ -1,3 +1,93 @@
-<p>
-  sidebar works!
-</p>
+
+<div>
+
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="page-wrapper">
+
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar2">
+          <div class="logo">
+            <a href="#">
+              <!--<a style="color: white">Mashvi POS System</a>-->
+            </a>
+          </div>
+          <div class="menu-sidebar2__content js-scrollbar1">
+            <div class="account2">
+              <div class="image img-110">
+                <img src="../../../assets/nuwan%20vision.png" alt="Mashvi Product"/>
+              </div>
+              <h4 class="name">MIHIRA Fruit Shop</h4>
+              <a style="font-weight: bold">Fresh best fruits for you..!</a>
+            </div>
+            <nav class="navbar-sidebar2">
+              <ul class="list-unstyled navbar__list">
+
+                <li id="home" class="active has-sub">
+                  <a routerLink="/dashboard" routerLinkActive="active" href="#">
+                    <i class="fas fa-tachometer-alt" style="color: #1b1b1b"></i>Dashboard</a>
+                </li>
+
+                <li id="customer">
+                  <a routerLink="/customer" routerLinkActive="active" href="#">
+                    <i class="fas fa-users" style="color: #1b1b1b"></i>Customer</a>
+                </li>
+
+                <li id="item">
+                  <a  routerLink="/fruititem" routerLinkActive="active" href="#">
+                    <i class="fas fa-cubes" style="color: #1b1b1b"></i>Fruit Item</a>
+                </li>
+
+                <li id="order">
+                  <a routerLink="/order" routerLinkActive="active" href="#">
+                    <i class="fas fa-shopping-cart" style="color: #1b1b1b"></i>Order</a>
+                </li>
+
+                <li id="supplier">
+                  <a  routerLink="/supplier" routerLinkActive="active" href="#">
+                    <i class="fas fa-user-plus" style="color: #1b1b1b"></i>Supplier</a>
+                </li>
+
+                <li id="logout">
+                  <a href="">
+                    <i class="fas fa-power-off" style="color: #1b1b1b"></i>Logout</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+
+
+
+        <!--<header>-->
+        <div class="page-container2">
+          <header class="header-desktop2">
+          </header>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-sm-10">
+      <router-outlet ></router-outlet>
+    </div>
+  </div>
+
+
+          <!--footer-->
+  <section>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="copyright">
+            <h5 style="text-align: center">Developed By Nuwan Nadeera @All Rights resvered</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
