@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.sql.*;
 
 @WebServlet(urlPatterns = "/customer")
-public class customerservlet extends HttpServlet {
+public class CustomerServlet extends HttpServlet {
 
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource ds;
@@ -40,13 +40,13 @@ public class customerservlet extends HttpServlet {
                 JsonArrayBuilder customers = Json.createArrayBuilder();
 
                 while (rst.next()){
-                    String id = rst.getString("id");
+                    String cid = rst.getString("cid");
                     String name = rst.getString("name");
                     String address = rst.getString("address");
-                    int contactno = rst.getInt("contactno");
+                    String contactno = rst.getString("contactno");
 
                     JsonObject customer = Json.createObjectBuilder()
-                            .add("id", id)
+                            .add("cid", cid)
                             .add("name", name)
                             .add("address", address)
                             .add("contactno", contactno)
@@ -81,14 +81,14 @@ public class customerservlet extends HttpServlet {
 
         try {
             JsonObject customer = reader.readObject();
-            String id = customer.getString("id");
+            String cid = customer.getString("cid");
             String name = customer.getString("name");
             String address = customer.getString("address");
-            int contactno = customer.getInt("contactno");
+            String contactno = customer.getString("contactno");
             connection = ds.getConnection();
 
             PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer VALUES (?,?,?,?)");
-            pstm.setObject(1, id);
+            pstm.setObject(1, cid);
             pstm.setObject(2, name);
             pstm.setObject(3, address);
             pstm.setObject(4, contactno);

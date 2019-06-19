@@ -25,7 +25,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
 
-            if (username.equals("admin") && password.equals("admin")){
+            if (username.equals("nuwan") && password.equals("1997")){
                 resp.setStatus(200);
                 req.getSession();
             }else{

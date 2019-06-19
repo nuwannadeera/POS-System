@@ -15,6 +15,6 @@ public class LogOutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         if (session != null) session.invalidate();
-        resp.sendRedirect("http://localhost:8080/auth");
+        resp.sendRedirect("http://localhost:8080/pos");
     }
 }
