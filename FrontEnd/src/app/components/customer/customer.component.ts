@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Customer} from '../../dto/customer';
 import {NgForm} from '@angular/forms';
 import {CustomerService} from '../../service/customer.service';
+
 
 @Component({
   selector: 'app-customer',
@@ -10,10 +11,11 @@ import {CustomerService} from '../../service/customer.service';
 })
 export class CustomerComponent implements OnInit {
   customerList: Array<Customer> = [];
-  selectcustomer: Customer = new Customer('', '', '', Number(''));
+  selectcustomer: Customer = new Customer('', '', '', '');
   manually = false;
   cust: Customer = null;
 
+  // @ViewChild('c1name') c1name: ElementRef;
   @ViewChild('frmCustomers') frmCustomers: NgForm;
   constructor(private customerService: CustomerService) { }
 
@@ -26,10 +28,12 @@ export class CustomerComponent implements OnInit {
       value =>
         this.customerList = value
     );
+    console.log(this.customerList);
   }
 
   tblRowClick(customer: Customer): void {
     this.selectcustomer = Object.assign({}, customer);
+    console.log('clicked table row is..' + this.selectcustomer);
   }
 
   saveCustomer (): void {
@@ -40,8 +44,8 @@ export class CustomerComponent implements OnInit {
           if (result) {
             alert('Customer saved Successfully...');
             this.customerList.push(this.selectcustomer);
-            // this.allCustomer();
             this.clear();
+            console.log(result);
           }
         }
       );
@@ -51,10 +55,30 @@ export class CustomerComponent implements OnInit {
   }
 
 
-  private clear() {
 
-    this.customerList = new Array<Customer>();
-    this.selectcustomer = new Customer('', '', '', Number(''));
+  updateCustomer (): void {
+    console.log('update btn working...');
+    if (!this.frmCustomers.invalid) {
+
+      this.customerService.updateCustomer(this.selectcustomer).subscribe(
+      (result) => {
+        console.log(result);
+        if (result) {
+          alert('Updated Successfully...');
+          this.manually = true;
+          this.customerList.push(this.selectcustomer);
+          this.clear();
+        }
+      }
+    );
+  } else {
+      alert('Invalid Data input..!');
+    }
+  }
+
+  private clear() {
+    // this.customerList = new Array<Customer>();
+    this.selectcustomer = new Customer('', '', '', '');
 
   }
 

@@ -1,0 +1,116 @@
+<div style="margin-right: 15px; margin-top: 100px">
+  <!--<body class="animsition">-->
+  <div class="page-wrapper">
+    <div class="page-container2">
+      <!--<div id="customerDIV">-->
+
+
+      <div class="row">
+        <div class="col-sm-5">
+          <br>
+          <br>
+          <!--<button type="button" class="btn btn-dark buttons" id="viewAllFruitItems">-->
+          <!--View Fruit Items-->
+          <!--</button>-->
+          <br>
+          <br>
+          <section class="statistic">
+            <div class="section__content section__content--p30">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
+                    <div class="card-header bg-info">Fruit Item Panel</div>
+                    <div class="card-body">
+                      <form id="searchCustomerForm">
+                        <div class="form-group">
+                          <form #frmItems="ngForm">
+                            <input type="text" [(ngModel)]="selectitem.itemcode" name="iname" id="fruitItemname" required pattern="^IC\d{3}$"
+                                   class="form-control"
+                                   placeholder="Input ItemCode">
+                          </form>
+                        </div>
+                        <button type="button" (click)="searchFruitItem()" id="btnsubmit" data-toggle="modal"
+                                data-target="#searchmyModal1" class="btn btn-primary">Search
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+
+
+        <div class="col-sm-5" style="background-color: papayawhip">
+          <form #frmItems="ngForm">
+            <br>
+            <div class="form-group">
+              <label>FruitItem Description</label>
+              <input type="text" [(ngModel)]="selectitem.description" name="description" class="form-control" id="cusID" required pattern="\w{3}.+"
+                     placeholder="Input Description">
+            </div>
+            <div class="form-group">
+              <label>Item UnitPrice</label>
+              <input type="text" [(ngModel)]="selectitem.qtyonhand" name="unitprice" class="form-control" id="cusprice" required pattern="^[0-9]{6}"
+                     placeholder="Input Item UnitPrice">
+            </div>
+            <div class="form-group">
+              <label>Item QtyonHand</label>
+              <input type="text" [(ngModel)]="selectitem.unitprice" name="qtyhand" class="form-control" id="cusContactNo" required pattern="^[0-9]{6}"
+                     placeholder="Input QtyonStock">
+            </div>
+
+            <button type="submit" (click)="saveFruitItem()" class="btn btn-success">Save</button>
+            &nbsp;
+            <button type="submit" (click)="updateFruitItem()" class="btn btn-primary">Update</button>
+            &nbsp;
+            <!--<button type="submit" class="btn btn-danger">Delete</button>-->
+            <br>
+          </form>
+        </div>
+
+
+      </div>
+
+
+      <br>
+      <br>
+
+      <div class="tbl col-md-6 col-lg-12">
+        <table class="table table-hover table-bordered">
+          <thead class="bg-info">
+          <tr>
+            <th>ItemCode</th>
+            <th>Description</th>
+            <th>QtyonHand</th>
+            <th>UnitPrice</th>
+          </tr>
+          </thead>
+          <tbody id="tbody">
+          <tr *ngFor="let item of itemList">
+            <td>{{item.itemcode}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.qtyonhand}}</td>
+            <td>{{item.unitprice | number:'1.2-2'}}</td>
+          </tr>
+
+
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+        <br>
+        <br>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+

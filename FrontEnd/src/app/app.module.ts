@@ -10,13 +10,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CustomerService} from './service/customer.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ItemComponent } from './components/item/item.component';
+import {ItemService} from './service/item.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     BrowserAnimationsModule
   ],
   providers: [
-    CustomerService
+    CustomerService,
+    ItemService
   ],
   bootstrap: [AppComponent]
 })
