@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Item} from '../../dto/item';
 import {NgForm} from '@angular/forms';
 import {ItemService} from '../../service/item.service';
-import {log} from 'util';
 
 @Component({
   selector: 'app-item',
@@ -12,7 +11,7 @@ import {log} from 'util';
 
 export class ItemComponent implements OnInit {
   itemList: Array<Item> = [];
-  selectitem: Item = new Item('', '', Number(''), Number(''));
+  selectitem: Item = new Item('', '', 0, 0 );
   manually = false;
   item: Item = null;
 
@@ -44,7 +43,7 @@ export class ItemComponent implements OnInit {
 
   private clear() {
     this.itemList = new Array<Item>();
-    this.selectitem = new Item('', '', Number(''), Number(''));
+    this.selectitem = new Item('', '', 0, 0 );
 
   }
 }

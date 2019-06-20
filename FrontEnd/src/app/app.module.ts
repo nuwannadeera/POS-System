@@ -12,6 +12,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ItemComponent } from './components/item/item.component';
 import {ItemService} from './service/item.service';
+import { OrderComponent } from './components/order/order.component';
+import {OrderService} from './service/order.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import {ItemService} from './service/item.service';
     CustomerComponent,
     DashboardComponent,
     SidebarComponent,
-    ItemComponent
+    ItemComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import {ItemService} from './service/item.service';
   ],
   providers: [
     CustomerService,
-    ItemService
+    ItemService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })

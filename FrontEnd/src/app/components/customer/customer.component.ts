@@ -62,12 +62,13 @@ export class CustomerComponent implements OnInit {
 
       this.customerService.updateCustomer(this.selectcustomer).subscribe(
       (result) => {
-        console.log(result);
-        if (result) {
+        if (!result) {
           alert('Updated Successfully...');
           this.manually = true;
           this.customerList.push(this.selectcustomer);
           this.clear();
+        } else {
+          alert('not update successfully....');
         }
       }
     );
@@ -76,10 +77,22 @@ export class CustomerComponent implements OnInit {
     }
   }
 
-  private clear() {
-    // this.customerList = new Array<Customer>();
-    this.selectcustomer = new Customer('', '', '', '');
 
+
+  searchCustomer (): void {
+    this.customerService.searchCustomer(this.selectcustomer.cid).subscribe(
+      (result) => {
+        console.log('search customer working.......');
+        this.selectcustomer = result;
+        console.log(this.selectcustomer);
+      }
+    );
+  }
+
+
+
+  private clear() {
+    this.selectcustomer = new Customer('', '', '', '');
   }
 
 }

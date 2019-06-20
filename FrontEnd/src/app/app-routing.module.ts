@@ -10,9 +10,9 @@ const routes: Routes = [
   {
     path: '', component: SidebarComponent
   },
-  // {
-  //   path: '', component: DashboardComponent
-  // },
+  {
+    path: '', component: DashboardComponent
+  },
   {
     path: 'dashboard', component: DashboardComponent
   },

@@ -12,6 +12,7 @@ import {environment} from '../../environments/environment';
 export class CustomerService {
 
   readonly baseUrl = environment.APIUrl + '/customer';
+  readonly baseUrl1 = environment.APIUrl + '/customer?cid=';
 
   constructor(private http: HttpClient) {}
 
@@ -20,16 +21,17 @@ export class CustomerService {
   }
 
   updateCustomer(customer: Customer): Observable<boolean> {
-    return this.http.put<boolean>(this.baseUrl, customer);
+    console.log(customer);
+    return this.http.put<boolean>(this.baseUrl1 + customer.cid, customer);
   }
 
   deleteCusomer(id): Observable<Customer> {
-    return this.http.delete<Customer>(this.baseUrl + '/delete/' + id);
+    return this.http.delete<Customer>(this.baseUrl1 + id);
     console.log(id);
   }
 
   searchCustomer(id): Observable<Customer> {
-    return this.http.get<Customer>(this.baseUrl + '/search/' + id);
+    return this.http.get<Customer>(this.baseUrl + id);
     console.log(id);
   }
 
