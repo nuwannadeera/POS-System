@@ -31,7 +31,7 @@ export class CustomerService {
   }
 
   searchCustomer(id): Observable<Customer> {
-    return this.http.get<Customer>(this.baseUrl + id);
+    return this.http.get<Customer>(this.baseUrl1 + id);
     console.log(id);
   }
 

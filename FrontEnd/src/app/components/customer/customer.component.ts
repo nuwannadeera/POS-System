@@ -62,14 +62,15 @@ export class CustomerComponent implements OnInit {
 
       this.customerService.updateCustomer(this.selectcustomer).subscribe(
       (result) => {
-        if (!result) {
+        // if (!result) {
           alert('Updated Successfully...');
           this.manually = true;
-          this.customerList.push(this.selectcustomer);
+          // this.customerList.push(this.selectcustomer);
+          this.allCustomer();
           this.clear();
-        } else {
-          alert('not update successfully....');
-        }
+        // } else {
+        //   alert('not update successfully....');
+        // }
       }
     );
   } else {
@@ -89,6 +90,20 @@ export class CustomerComponent implements OnInit {
     );
   }
 
+
+  deleteCustomer (): void {
+    if (confirm('Are you want to delete this customer')) {
+      console.log('delete btn working.....');
+      this.customerService.deleteCusomer(this.selectcustomer.cid).subscribe(
+        (result) => {
+          alert('Customer Successfully Deleted...');
+          console.log(result);
+          this.allCustomer();
+          this.clear();
+        }
+      );
+    }
+  }
 
 
   private clear() {

@@ -31,19 +31,79 @@ export class ItemComponent implements OnInit {
     console.log(this.itemList);
   }
 
+
+
   saveItem(): void {
+    if (!this.frmItems.invalid) {
     this.itemService.saveItem(this.selectitem).subscribe(
       (result) => {
+      if (result) {
         alert('Iem saved Successfully...');
-        this.allItem();
+        this.itemList.push(this.selectitem);
         this.clear();
+        console.log(result);
+      }
+      }
+    );
+  } else {
+  alert('Invalid input..');
+  }
+}
+
+
+
+  updateItem (): void {
+    console.log('update btn working...');
+    if (!this.frmItems.invalid) {
+
+      this.itemService.updateItem(this.selectitem).subscribe(
+        (result) => {
+          // if (!result) {
+          alert('Updated Successfully...');
+          this.manually = true;
+          // this.customerList.push(this.selectcustomer);
+          this.allItem();
+          this.clear();
+          // } else {
+          //   alert('not update successfully....');
+          // }
+        }
+      );
+    } else {
+      alert('Invalid Data input..!');
+    }
+  }
+
+
+  searchCustomer (): void {
+    this.itemService.searchItem(this.selectitem.itemcode).subscribe(
+      (result) => {
+        console.log('search item working.......');
+        this.selectitem = result;
+        console.log(this.selectitem);
       }
     );
   }
 
-  private clear() {
-    this.itemList = new Array<Item>();
-    this.selectitem = new Item('', '', 0, 0 );
 
+  deleteCustomer (): void {
+    if (confirm('Are you want to delete this item')) {
+      console.log('delete btn working.....');
+      this.itemService.deleteItem(this.selectitem.itemcode).subscribe(
+        (result) => {
+          alert('Item Successfully Deleted...');
+          console.log(result);
+          this.allItem();
+          this.clear();
+        }
+      );
+    }
   }
+
+
+  private clear() {
+    // this.itemList = new Array<Item>();
+    this.selectitem = new Item('', '', 0, 0 );
+  }
+
 }
