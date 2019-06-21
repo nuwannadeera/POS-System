@@ -44,7 +44,6 @@ public class CustomerServlet extends HttpServlet {
                         ob.add("cid", rst.getString(1));
                         ob.add("name", rst.getString(2));
                         ob.add("address", rst.getString(3));
-                        ob.add("contactno", rst.getDouble(4));
 
                         resp.setContentType("application/json");
                         out.println(ob.build());
@@ -73,13 +72,11 @@ public class CustomerServlet extends HttpServlet {
                         String cid = rst.getString("cid");
                         String name = rst.getString("name");
                         String address = rst.getString("address");
-                        String contactno = rst.getString("contactno");
 
                         JsonObject customer = Json.createObjectBuilder()
                                 .add("cid", cid)
                                 .add("name", name)
                                 .add("address", address)
-                                .add("contactno", contactno)
                                 .build();
                         customers.add(customer);
                     }
@@ -115,15 +112,13 @@ public class CustomerServlet extends HttpServlet {
             String cid = customer.getString("cid");
             String name = customer.getString("name");
             String address = customer.getString("address");
-            String contactno = customer.getString("contactno");
 
             connection = ds.getConnection();
 
-            PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer VALUES (?,?,?,?)");
+            PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer VALUES (?,?,?)");
             pstm.setObject(1, cid);
             pstm.setObject(2, name);
             pstm.setObject(3, address);
-            pstm.setObject(4, contactno);
             boolean result = pstm.executeUpdate() > 0;
 
             if (result) {
@@ -159,7 +154,6 @@ public class CustomerServlet extends HttpServlet {
                 String cid = cus.getString("cid");
                 String name = cus.getString("name");
                 String address = cus.getString("address");
-                String contactno = cus.getString("contactno");
 
                 if (!cid.equals(req.getParameter("cid"))) {
                     resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -167,16 +161,13 @@ public class CustomerServlet extends HttpServlet {
                 }
 
                 Connection connection = ds.getConnection();
-//                Class.forName("com.mysql.jdbc.Driver");
-//                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade", "root", "1997");
-                PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?,address=?, contactno=? WHERE cid=?");
-                pstm.setObject(4, cid);
+                PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?,address=? WHERE cid=?");
+                pstm.setObject(3, cid);
                 pstm.setObject(1, name);
                 pstm.setObject(2, address);
-                pstm.setObject(3, contactno);
                 int affectedRows = pstm.executeUpdate();
 
-//                System.out.println(cid+","+name+","+address+","+contactno);
+//                System.out.println(cid+","+name+","+address);
 
                 if (affectedRows > 0) {
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
