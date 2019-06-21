@@ -30,11 +30,6 @@
                       <input type="text" id="txtAdd" class="form-control" name="addrss" [(ngModel)]="selectedcustomernew.address">
                     </div>
 
-                    <div class="form-group">
-                      <label class="lbl">ContactNo</label>
-                      <input type="text" id="txtcontact" class="form-control" name="contact" [(ngModel)]="selectedcustomernew.contactno">
-                    </div>
-
                   </form>
                 </div>
 
@@ -48,7 +43,7 @@
                 <div class="card-header bg-info" style="font-weight: bold">Item Selection</div>
                 <div class="card-body">
 
-                  <form #frmItem="ngForm">
+                  <form (ngSubmit)="saveOrder()" #frmItem="ngForm">
 
                     <label class="lbl">FruitItem</label>
                     <select class="styleSelect" id="cmbItem" style="width: 100%;" (change)="searchItem($event)">

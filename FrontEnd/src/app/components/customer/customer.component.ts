@@ -11,7 +11,7 @@ import {CustomerService} from '../../service/customer.service';
 })
 export class CustomerComponent implements OnInit {
   customerList: Array<Customer> = [];
-  selectcustomer: Customer = new Customer('', '', '', '');
+  selectcustomer: Customer = new Customer('', '', '');
   manually = false;
   cust: Customer = null;
 
@@ -107,7 +107,7 @@ export class CustomerComponent implements OnInit {
 
 
   private clear() {
-    this.selectcustomer = new Customer('', '', '', '');
+    this.selectcustomer = new Customer('', '', '');
   }
 
 }

@@ -1,4 +1,4 @@
 export  class ItemDetail {
-  constructor(public odid: string, public itemCode: string, public qty: number, public unitPrice: string) {
+  constructor(public oid: string, public itemCode: string, public qty: string, public unitPrice: string) {
   }
 }
