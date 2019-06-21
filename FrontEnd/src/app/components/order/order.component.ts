@@ -15,14 +15,16 @@ export class OrderComponent implements OnInit {
 
   customerList: Array<Customer> = [];
   selectedcustomer: Customer = new Customer('', '', '', '');
+  selectedcustomernew: Customer = new Customer('', '', '', '');
   // cust: Customer = null;
   itemList: Array<Item> = [];
   selectitem: Item = new Item('', '', 0, 0);
+  selecteditemnew: Item = new Item('', '', 0, 0);
   // item: Item = null;
 
   @ViewChild('frmcustomer') frmcustomer: NgForm;
-  @ViewChild('frmItem') frmItem: NgForm;
-  @ViewChild('frmOrders') frmOrders: NgForm;
+  // @ViewChild('frmItem') frmItem: NgForm;
+  // @ViewChild('frmOrders') frmOrders: NgForm;
 
   constructor(private customerService: CustomerService, private itemService: ItemService) { }
 
@@ -67,24 +69,22 @@ private allFruitItem(): void {
 
 
 searchCustomer (event: any): void {
-  this.customerService.searchCustomer(this.selectedcustomer.cid).subscribe(
-  (result) => {
-    console.log('combo cus search working.......');
-    this.selectedcustomer = result;
+  for (this.selectedcustomer of this.customerList) {
+    if (this.selectedcustomer.cid === event.target.value) {
+      this.selectedcustomernew = this.selectedcustomer;
+    }
   }
-);
 }
 
 
 
 
 searchItem(event: any): void {
-  this.itemService.searchItem(this.selectitem.itemcode).subscribe(
-  (result) => {
-    console.log('combo item search working.......');
-    this.selectitem = result;
+  for (this.selectitem of this.itemList) {
+    if (this.selectitem.itemcode === event.target.value) {
+      this.selecteditemnew = this.selectitem;
+    }
   }
-);
 }
 
 
