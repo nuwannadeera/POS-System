@@ -19,15 +19,49 @@ public class ItemServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource ds;
 
-//                                   getAll
+//                                   item search
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (PrintWriter out = resp.getWriter()) {
 
             if (req.getParameter("itemcode") != null) {
-
                 resp.setContentType("application/json");
+
+                String code = req.getParameter("itemcode");
+
+
+                try {
+                    Connection connection = ds.getConnection();
+
+                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Item WHERE itemcode=?");
+                    pstm.setObject(1, code);
+                    ResultSet rst = pstm.executeQuery();
+
+                    if (rst.next()) {
+                        JsonObjectBuilder ob = Json.createObjectBuilder();
+                        ob.add("itemcode", rst.getString(1));
+                        ob.add("description", rst.getString(2));
+                        ob.add("unitprice", rst.getDouble(3));
+                        ob.add("qtyonhand", rst.getInt(4));
+
+
+                        resp.setContentType("application/json");
+                        out.println(ob.build());
+                    } else {
+                        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    }
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+
+//
+
+//                                     getall item
+
+            } else {
 
                 try {
                     Connection connection = ds.getConnection();
@@ -40,14 +74,14 @@ public class ItemServlet extends HttpServlet {
                     while (rst.next()) {
                         String itemcode = rst.getString("itemcode");
                         String description = rst.getString("description");
-                        int qtyonhand = rst.getInt("qtyonhand");
-                        double unitprice = rst.getDouble("unitprice");
+                        String unitprice = String.valueOf(rst.getDouble("unitprice"));
+                        String qtyonhand = String.valueOf((rst.getInt("qtyOnHand")));
 
                         JsonObject item = Json.createObjectBuilder()
                                 .add("itemcode", itemcode)
                                 .add("description", description)
-                                .add("qtyonhand", qtyonhand)
                                 .add("unitprice", unitprice)
+                                .add("qtyonhand", qtyonhand)
                                 .build();
                         items.add(item);
                     }
@@ -59,35 +93,7 @@ public class ItemServlet extends HttpServlet {
                     resp.sendError(500, ex.getMessage());
                     ex.printStackTrace();
                 }
-
-//                                     search item
-
-            } else {
-                try {
-                    Connection connection = ds.getConnection();
-//                    Class.forName("com.mysql.jdbc.Driver");
-//                    Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade", "root", "1997");
-                    Statement stm = connection.createStatement();
-                    ResultSet rst = stm.executeQuery("SELECT * FROM Item");
-
-                    resp.setContentType("application/json");
-
-                    JsonArrayBuilder ab = Json.createArrayBuilder();
-
-                    while (rst.next()) {
-                        JsonObjectBuilder ob = Json.createObjectBuilder();
-                        ob.add("code", rst.getString("code"));
-                        ob.add("description", rst.getString("description"));
-                        ob.add("price", rst.getDouble(3));
-                        ob.add("qty", rst.getInt(4));
-                        ab.add(ob.build());
-                    }
-                    out.println(ab.build());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
             }
-
         }
 
     }
@@ -108,30 +114,32 @@ public class ItemServlet extends HttpServlet {
             JsonObject item = reader.readObject();
             String itemcode = item.getString("itemcode");
             String description = item.getString("description");
-            int qtyonhand = Integer.parseInt(item.getString("qtyonhand"));
             double unitprice = Double.parseDouble(item.getString("unitprice"));
+            int qtyonhand = Integer.parseInt(item.getString("qtyonhand"));
+
             connection = ds.getConnection();
 
             PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item VALUES (?,?,?,?)");
             pstm.setObject(1, itemcode);
             pstm.setObject(2, description);
-            pstm.setObject(3, qtyonhand);
-            pstm.setObject(4, unitprice);
-            boolean result = pstm.executeUpdate()>0;
+            pstm.setObject(3, unitprice);
+            pstm.setObject(4, qtyonhand);
 
-            if (result){
+            boolean result = pstm.executeUpdate() > 0;
+
+            if (result) {
                 out.println("true");
-            }else{
+            } else {
                 out.println("false");
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             out.println("false");
-        }finally {
+        } finally {
             try {
                 connection.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             out.close();
@@ -139,55 +147,112 @@ public class ItemServlet extends HttpServlet {
     }
 
 
-
 //                               update item
 
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("itemcode") != null) {
+
+        if (req.getParameter("itemcode") != null){
 
             try {
                 JsonReader reader = Json.createReader(req.getReader());
                 JsonObject item = reader.readObject();
 
-                String itemcode = item.getString("itemcode");
-                String description = item.getString("description");
-                int qtyonhand = Integer.parseInt(item.getString("qtyonhand"));
-                double unitprice = Double.parseDouble(item.getString("unitprice"));
+                String code=item.getString("itemcode");
+                String desc=item.getString("description");
+                double price=Double.parseDouble(item.getString("unitprice"));
+                int qty=Integer.parseInt(item.getString("qtyonhand"));
 
-                if (!itemcode.equals(req.getParameter("itemcode"))) {
+                if (!code.equals(req.getParameter("itemcode"))){
                     resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                     return;
                 }
 
                 Connection connection = ds.getConnection();
-//                Class.forName("com.mysql.jdbc.Driver");
-//                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ThogaKade", "root", "1997");
-                PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?,qtyonhand=?, unitprice=? WHERE itemcode=?");
-                pstm.setObject(1, itemcode);
-                pstm.setObject(2, description);
-                pstm.setObject(3, qtyonhand);
-                pstm.setObject(4, unitprice);
+                java.sql.PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitprice=?,qtyonhand=? WHERE itemcode=?");
+                pstm.setObject(4,code);
+                pstm.setObject(1,desc);
+                pstm.setObject(2,price);
+                pstm.setObject(3,qty);
                 int affectedRows = pstm.executeUpdate();
 
-                if (affectedRows > 0) {
+                if (affectedRows > 0){
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                } else {
+                }else{
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 }
 
-            } catch (JsonParsingException | NullPointerException ex) {
+            }catch (JsonParsingException | NullPointerException  ex){
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            } catch (Exception ex) {
+            }catch (Exception ex){
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
 
-        } else {
+
+        }else{
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
-    }
 
+
+//        if (req.getParameter("itemcode") != null) {
+//            System.out.println(req.getParameter("itemcode"));
+//            try {
+//                JsonReader reader = Json.createReader(req.getReader());
+//                JsonObject item = reader.readObject();
+//
+//                System.out.println(item);
+//
+//                System.out.println(item.getString("itemcode"));
+//
+//                double d=Double.parseDouble(item.getString())
+//
+//
+//                String itemcode = item.getString("itemcode");
+//                String description = item.getString("description");
+//
+//                double unitprice = Double.parseDouble(item.getString("unitprice"));
+//                int qtyonhand = item.getInt("qtyonhand");
+//
+//                System.out.println("itemcode : " + itemcode);
+//                System.out.println("descirption : " + description);
+//                System.out.println("unitprice : " + unitprice);
+//                System.out.println("qtyonhand : " + qtyonhand);
+//
+//                if (!itemcode.equals(req.getParameter("itemcode"))) {
+//                    System.out.println("for loop");
+//                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+//                    return;
+//                }
+//
+//                Connection connection = ds.getConnection();
+//                PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?,unitprice=?, qtyonhand=? WHERE itemcode=?");
+//                pstm.setObject(4, itemcode);
+//                pstm.setObject(1, description);
+//                pstm.setObject(2, unitprice);
+//                pstm.setObject(3, qtyonhand);
+//                int affectedRows = pstm.executeUpdate();
+//                System.out.println(affectedRows);
+//
+//                if (affectedRows > 0) {
+//                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//                } else {
+//                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//                }
+//
+//            } catch (JsonParsingException | NullPointerException ex) {
+//                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+//            } catch (Exception ex) {
+//                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+//            }
+//
+//        } else {
+//            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+//        }
+
+
+
+    }
 
 
 //                               delete item
@@ -220,7 +285,6 @@ public class ItemServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
-
 
 
 }
