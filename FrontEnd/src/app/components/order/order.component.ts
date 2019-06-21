@@ -14,21 +14,23 @@ export class OrderComponent implements OnInit {
 
 
   customerList: Array<Customer> = [];
-  customer: Customer = new Customer('', '', '', '');
-  manually = false;
-  cust: Customer = null;
+  selectedcustomer: Customer = new Customer('', '', '', '');
+  // cust: Customer = null;
   itemList: Array<Item> = [];
-  item: Item = new Item('', '', 0, 0);
-  item: Item = null;
+  selectitem: Item = new Item('', '', 0, 0);
+  // item: Item = null;
 
-  @ViewChild('frmOrder') frmOrder: NgForm;
+  @ViewChild('frmcustomer') frmcustomer: NgForm;
+  @ViewChild('frmItem') frmItem: NgForm;
+  @ViewChild('frmOrders') frmOrders: NgForm;
+
   constructor(private customerService: CustomerService, private itemService: ItemService) { }
 
   ngOnInit() {
   this.allCustomer();
-  this.customerID();
+  // this.customerID();
   this.allFruitItem();
-  this.itemID();
+  // this.itemID();
   }
 
 private allCustomer(): void {
@@ -48,27 +50,27 @@ private allFruitItem(): void {
 
 
 
-private customerID() {
-  this.customerService.getAllCustomer().subscribe(
-    value =>
-      this.customerList = value
-  );
-}
+// private customerID() {
+//   this.customerService.getAllCustomer().subscribe(
+//     value =>
+//       this.customerList = value
+//   );
+// }
 
-private itemID() {
-  this.itemService.getAllItem().subscribe(
-    value =>
-      this.itemList = value
-  );
-}
+// private itemID() {
+//   this.itemService.getAllItem().subscribe(
+//     value =>
+//       this.itemList = value
+//   );
+// }
 
 
 
 searchCustomer (event: any): void {
-  this.customerService.searchCustomer(this.customer.cid).subscribe(
+  this.customerService.searchCustomer(this.selectedcustomer.cid).subscribe(
   (result) => {
-    console.log('combo search working.......');
-    this.customer = result;
+    console.log('combo cus search working.......');
+    this.selectedcustomer = result;
   }
 );
 }
@@ -76,30 +78,29 @@ searchCustomer (event: any): void {
 
 
 
-searchFruitItem(event: any): void {
-  this.itemService.searchItem(this.item.itemcode).subscribe(
+searchItem(event: any): void {
+  this.itemService.searchItem(this.selectitem.itemcode).subscribe(
   (result) => {
-    this.item = result;
+    console.log('combo item search working.......');
+    this.selectitem = result;
   }
 );
 }
 
 
 
+// selectCustomer (customer: Customer): void {
+//   this.selectedcustomer = customer;
+// this.cust =  Object.assign({}, customer);
+// this.manually = true;
+// }
 
 
-
-selectCustomer (customer: Customer): void {
-  this.customer = customer;
-this.cust =  Object.assign({}, customer);
-this.manually = true;
-}
-
-selectFruitItem (fruititem: Item): void {
-  this.item = fruititem;
-this.item =  Object.assign({}, fruititem);
-this.manually = true;
-}
+// selectFruitItem (fruititem: Item): void {
+//   this.selectitem = fruititem;
+// this.selectitem =  Object.assign({}, fruititem);
+// this.manually = true;
+// }
 
 
 }

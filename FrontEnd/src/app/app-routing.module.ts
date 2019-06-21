@@ -4,6 +4,7 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {CustomerComponent} from './components/customer/customer.component';
 import {ItemComponent} from './components/item/item.component';
+import {OrderComponent} from './components/order/order.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: 'fruititem', component: ItemComponent
+  },
+  {
+    path: 'order', component: OrderComponent
   }
 ];
 

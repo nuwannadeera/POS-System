@@ -23,7 +23,7 @@
                   <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
                     <div class="card-header bg-info">Customer Panel</div>
                     <div class="card-body">
-                      <form id="searchCustomerForm">
+                      <!--<form id="searchCustomerForm">-->
                         <div class="form-group">
                           <form #frmCustomers="ngForm">
                             <input type="text" [(ngModel)]="selectcustomer.cid" name="cid" id="cname" class="form-control" required pattern="^C\d{3}$"
@@ -32,7 +32,7 @@
                         </div>
                         <button type="button" (click)="searchCustomer()" id="btncusSearch" data-toggle="modal" class="btn btn-dark">Search
                         </button>
-                      </form>
+                      <!--</form>-->
                     </div>
                   </div>
 
@@ -50,7 +50,7 @@
         <div class="col-sm-5" style="background-color: #d9f1e3">
           <form #frmCustomers="ngForm">
             <br>
-            <div class="form-group" >
+            <div class="form-group">
               <label>Customer Name</label>
               <input type="text" [(ngModel)]="selectcustomer.name" name="name"  class="form-control" id="cusID" placeholder="Input Customer Name" required pattern="\w{3}.+">
             </div>

@@ -11,7 +11,7 @@
                 <div class="card-header bg-info" style="font-weight: bold">Customer Details</div>
                 <div class="card-body">
 
-                  <form id="customerDTform" >
+                  <form #frmcustomer="ngForm" >
 
                     <label class="lbl">Customer</label>
                     &nbsp;
@@ -22,20 +22,17 @@
 
                     <div class="form-group">
                       <label class="lbl">Name</label>
-                      <input type="text" id="txtID" class="form-control" name="name" [(ngModel)]="customer.name"
-                             aria-describedby="emailHelp">
+                      <input type="text" id="txtID" class="form-control" name="name" [(ngModel)]="selectedcustomer.name">
                     </div>
 
                     <div class="form-group">
                       <label class="lbl">Address</label>
-                      <input type="text" id="txtAdd" class="form-control" name="addrss" [(ngModel)]="customer.address"
-                             aria-describedby="emailHelp">
+                      <input type="text" id="txtAdd" class="form-control" name="addrss" [(ngModel)]="selectedcustomer.address">
                     </div>
 
                     <div class="form-group">
                       <label class="lbl">ContactNo</label>
-                      <input type="text" id="txtcontact" class="form-control" [(ngModel)]="customer.contactno" name="contact"
-                             aria-describedby="emailHelp">
+                      <input type="text" id="txtcontact" class="form-control" name="contact" [(ngModel)]="selectedcustomer.contactno">
                     </div>
 
                   </form>
@@ -50,40 +47,37 @@
               <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
                 <div class="card-header bg-info" style="font-weight: bold">Item Selection</div>
                 <div class="card-body">
-                  <form id="ItemDTfrom">
+
+                  <form #frmItem="ngForm">
 
                     <label class="lbl">FruitItem</label>
-                    <select class="styleSelect" id="cmbItem" style="width: 100%;" (change)="searchFruitItem($event)">
+                    <select class="styleSelect" id="cmbItem" style="width: 100%;" (change)="searchItem($event)">
                       <option>Select ItemCode</option>
-                      <option *ngFor="let fruititem of fruititemList">{{fruititem.itemcode}}</option>
+                      <option *ngFor="let item of itemList">{{item.itemcode}}</option>
                     </select>
 
                     <div class="form-group">
                       <label class="lbl">Item Description</label>
-                      <input id="txtpid" type="text" class="form-control" [(ngModel)]="fruititem.fruitname" name="fruitname"
-                             aria-describedby="emailHelp">
+                      <input type="text" [(ngModel)]="selectitem.description" name="description" class="form-control" id="cusdesc" placeholder="Input Description">
                     </div>
 
                     <div class="form-group">
                       <label class="lbl">Price</label>
-                      <input id="txtprice" type="text" class="form-control" [(ngModel)]="fruititem.unitprice" name="uprice"
-                             aria-describedby="emailHelp">
+                      <input type="text" [(ngModel)]="selectitem.unitprice" name="unitprice" class="form-control" id="cusprice" placeholder="Input Item UnitPrice">
                     </div>
 
                     <div class="form-group">
                       <label class="lbl">QTY</label>
-                      <input id="txtQTY" type="text" class="form-control" [(ngModel)]="fruititem.qtyonhand" name="qty"
-                             aria-describedby="emailHelp">
+                      <input type="text" [(ngModel)]="selectitem.qtyonhand" name="qtyhand" class="form-control" id="cusqty" placeholder="Input QtyonStock">
                     </div>
 
-                    <hr>
-                    <label id="lbl" style="font-weight: bold">Order Item</label>
-                    <hr>
 
+                    <hr>
+                    <label class="lbl" style="font-weight: bold">Order Item</label>
+                    <hr>
                     <div class="form-group">
                       <label class="lbl">Order QTY</label>
-                      <input id="txtOQTY" type="email" class="form-control" name="OQTY"
-                             aria-describedby="emailHelp">
+                      <input id="txtOQTY" type="text" class="form-control">
                     </div>
 
                   </form>
@@ -94,15 +88,14 @@
 
 
             <div class="col-xl-6">
-
               <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
                 <div class="card-header bg-info" style="font-weight: bold">Invoice Detail</div>
                 <div class="card-body">
-                  <form id="OrderDTForm">
+
+                  <form #frmOrders="ngForm">
                     <div class="form-group">
                       <label class="lbl">Customer</label>
-                      <input id="txtcName" type="email" class="form-control"
-                             aria-describedby="emailHelp">
+                      <input id="txtcName" type="text" class="form-control" [(ngModel)]="selectedcustomer.name">
                     </div>
                     <div class="form-group">
                       <label class="lbl">Date</label>
@@ -110,47 +103,43 @@
                     </div>
                     <div class="form-group">
                       <label class="lbl">Order ID</label>
-                      <input id="txtOrderID" type="email" class="form-control" name="OID"
-                             aria-describedby="emailHelp">
+                      <input id="txtOrderID" type="text" class="form-control" name="OID">
                     </div>
                     <button id="btnorderdt" type="button" class="btn btn-success">Submit Order</button>
                   </form>
+
                 </div>
               </div>
             </div>
+
+
+
 
           </div>
         </div>
 
 
-        <div id="tbl">
 
-          <table class="table table-bordered">
+
+        <div id="tbl">
+          <table class="table table-hover table-bordered">
             <thead class="bg-info">
             <tr>
-              <th>Order ID</th>
               <th>ODID</th>
+              <th>Description</th>
+              <th>Unit Price</th>
               <th>Order QTY</th>
-              <th>Amount</th>
             </tr>
-
-            <br>
-            <br>
-
             </thead>
             <tbody id="tblOrder">
-
             </tbody>
           </table>
 
           <br>
           <section class="content-box-2">
-            <span id="total-text">Total : 00.0Rs/=</span>
+            <span id="total-text">Total :Rs 00.00/=</span>
             <br><br>
-            <label>Cash</label><input type="text" class="styleTextInput" style="width: 200px;">
-            <label>Balance</label><input type="text" class="styleTextInput" style="width: 200px;">
-            <label>Discount</label><input type="text" class="styleTextInput" style="width: 200px;">
-          </section>
+           </section>
           <!--<section id="order-last-buttons">-->
           <!--<button type="button" class="btn btn-primary">Clear</button>-->
           <!--&nbsp;-->
@@ -159,21 +148,7 @@
 
         </div>
 
-        <!--<section>-->
-        <!--<div class="container-fluid">-->
-        <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-        <!--<div class="copyright">-->
-        <!--<p>Developed By Nuwan Nadeera @All Rights resvered</p>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</section>-->
-
       </div>
-
-
 
     </div>
   </div>

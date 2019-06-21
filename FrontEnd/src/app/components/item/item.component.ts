@@ -34,7 +34,7 @@ export class ItemComponent implements OnInit {
 
 
   saveItem(): void {
-    if (!this.frmItems.invalid) {
+    if (this.frmItems.valid) {
     this.itemService.saveItem(this.selectitem).subscribe(
       (result) => {
       if (result) {
