@@ -1,0 +1,180 @@
+<div style="margin-right: 15px; margin-top: 100px">
+  <div class="page-wrapper">
+    <div class="page-container2">
+
+
+      <div id="orderDIV">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
+                <div class="card-header bg-info" style="font-weight: bold">Customer Details</div>
+                <div class="card-body">
+
+                  <form id="customerDTform" >
+
+                    <label class="lbl">Customer</label>
+                    &nbsp;
+                    <select class="styleSelect" id="cmbCustomer" (change)="searchCustomer($event)">
+                      <option>Select CustomerID</option>
+                      <option *ngFor="let customer of customerList">{{customer.cid}}</option>
+                    </select>
+
+                    <div class="form-group">
+                      <label class="lbl">Name</label>
+                      <input type="text" id="txtID" class="form-control" name="name" [(ngModel)]="customer.name"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="lbl">Address</label>
+                      <input type="text" id="txtAdd" class="form-control" name="addrss" [(ngModel)]="customer.address"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="lbl">ContactNo</label>
+                      <input type="text" id="txtcontact" class="form-control" [(ngModel)]="customer.contactno" name="contact"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-xl-6">
+
+              <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
+                <div class="card-header bg-info" style="font-weight: bold">Item Selection</div>
+                <div class="card-body">
+                  <form id="ItemDTfrom">
+
+                    <label class="lbl">FruitItem</label>
+                    <select class="styleSelect" id="cmbItem" style="width: 100%;" (change)="searchFruitItem($event)">
+                      <option>Select ItemCode</option>
+                      <option *ngFor="let fruititem of fruititemList">{{fruititem.itemcode}}</option>
+                    </select>
+
+                    <div class="form-group">
+                      <label class="lbl">Item Description</label>
+                      <input id="txtpid" type="text" class="form-control" [(ngModel)]="fruititem.fruitname" name="fruitname"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="lbl">Price</label>
+                      <input id="txtprice" type="text" class="form-control" [(ngModel)]="fruititem.unitprice" name="uprice"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="lbl">QTY</label>
+                      <input id="txtQTY" type="text" class="form-control" [(ngModel)]="fruititem.qtyonhand" name="qty"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                    <hr>
+                    <label id="lbl" style="font-weight: bold">Order Item</label>
+                    <hr>
+
+                    <div class="form-group">
+                      <label class="lbl">Order QTY</label>
+                      <input id="txtOQTY" type="email" class="form-control" name="OQTY"
+                             aria-describedby="emailHelp">
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-xl-6">
+
+              <div class="card text-white bg-light mb-5 rounded" style="max-width: 25rem;">
+                <div class="card-header bg-info" style="font-weight: bold">Invoice Detail</div>
+                <div class="card-body">
+                  <form id="OrderDTForm">
+                    <div class="form-group">
+                      <label class="lbl">Customer</label>
+                      <input id="txtcName" type="email" class="form-control"
+                             aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                      <label class="lbl">Date</label>
+                      <input type="date" class="styleDate" name="Date">
+                    </div>
+                    <div class="form-group">
+                      <label class="lbl">Order ID</label>
+                      <input id="txtOrderID" type="email" class="form-control" name="OID"
+                             aria-describedby="emailHelp">
+                    </div>
+                    <button id="btnorderdt" type="button" class="btn btn-success">Submit Order</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div id="tbl">
+
+          <table class="table table-bordered">
+            <thead class="bg-info">
+            <tr>
+              <th>Order ID</th>
+              <th>ODID</th>
+              <th>Order QTY</th>
+              <th>Amount</th>
+            </tr>
+
+            <br>
+            <br>
+
+            </thead>
+            <tbody id="tblOrder">
+
+            </tbody>
+          </table>
+
+          <br>
+          <section class="content-box-2">
+            <span id="total-text">Total : 00.0Rs/=</span>
+            <br><br>
+            <label>Cash</label><input type="text" class="styleTextInput" style="width: 200px;">
+            <label>Balance</label><input type="text" class="styleTextInput" style="width: 200px;">
+            <label>Discount</label><input type="text" class="styleTextInput" style="width: 200px;">
+          </section>
+          <!--<section id="order-last-buttons">-->
+          <!--<button type="button" class="btn btn-primary">Clear</button>-->
+          <!--&nbsp;-->
+          <!--<button type="button" class="btn btn-secondary">Renew Order</button>-->
+          <!--</section>-->
+
+        </div>
+
+        <!--<section>-->
+        <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+        <!--<div class="copyright">-->
+        <!--<p>Developed By Nuwan Nadeera @All Rights resvered</p>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</section>-->
+
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
