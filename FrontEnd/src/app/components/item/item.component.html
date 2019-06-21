@@ -30,9 +30,7 @@
                                    placeholder="Input ItemCode">
                           </form>
                         </div>
-                        <button type="button" (click)="searchFruitItem()" id="btnsubmit" data-toggle="modal"
-                                data-target="#searchmyModal1" class="btn btn-primary">Search
-                        </button>
+                        <button type="button" (click)="searchitem()" id="btnsubmit" data-toggle="modal" class="btn btn-primary">Search</button>
                       </form>
                     </div>
                   </div>
@@ -55,19 +53,19 @@
             </div>
             <div class="form-group">
               <label>Item UnitPrice</label>
-              <input type="text" [(ngModel)]="selectitem.qtyonhand" name="unitprice" class="form-control" id="cusprice" required pattern="^[0-9]{6}"
+              <input type="text" [(ngModel)]="selectitem.unitprice" name="unitprice" class="form-control" id="cusprice" required pattern="[0-9].+"
                      placeholder="Input Item UnitPrice">
             </div>
             <div class="form-group">
               <label>Item QtyonHand</label>
-              <input type="text" [(ngModel)]="selectitem.unitprice" name="qtyhand" class="form-control" id="cusContactNo" required pattern="^[0-9]{6}"
+              <input type="text" [(ngModel)]="selectitem.qtyonhand" name="qtyhand" class="form-control" id="cusContactNo" required pattern="^[0-9].+"
                      placeholder="Input QtyonStock">
             </div>
-            <button type="submit" (click)="saveFruitItem()" class="btn btn-success">Save</button>
+            <button type="submit" (click)="saveItem()" class="btn btn-success">Save</button>
             &nbsp;
-            <button type="submit" (click)="updateFruitItem()" class="btn btn-primary">Update</button>
+            <button type="submit" (click)="updateItem()" class="btn btn-primary">Update</button>
             &nbsp;
-            <button type="submit" (click)="deleteFruitItem()" class="btn btn-danger">Delete</button>
+            <button type="submit" (click)="deleteItem()" class="btn btn-danger">Delete</button>
             &nbsp;
             <button type="submit" (click)="clear()" class="btn btn-danger">Clear</button>
             <br>
@@ -92,7 +90,7 @@
           </tr>
           </thead>
           <tbody id="tbody">
-          <tr *ngFor="let item of itemList">
+          <tr *ngFor="let item of itemList" (click)="tblRowClick(item)">
             <td>{{item.itemcode}}</td>
             <td>{{item.description}}</td>
             <td>{{item.qtyonhand}}</td>

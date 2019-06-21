@@ -10,6 +10,7 @@ import {Item} from '../dto/item';
 export class ItemService {
 
   readonly baseUrl = environment.APIUrl + '/item';
+  readonly baseUrl1 = environment.APIUrl + '/item?itemcode=';
 
   constructor(private http: HttpClient) {}
 
@@ -18,16 +19,16 @@ export class ItemService {
   }
 
   updateItem(item: Item): Observable<boolean> {
-    return this.http.put<boolean>(this.baseUrl, item);
+    return this.http.put<boolean>(this.baseUrl1 + item.itemcode, item);
   }
 
   deleteItem(itemcode): Observable<Item> {
-    return this.http.delete<Item>(this.baseUrl + '/delete/' + itemcode);
+    return this.http.delete<Item>(this.baseUrl1 + itemcode);
     console.log(itemcode);
   }
 
   searchItem(itemcode): Observable<Item> {
-    return this.http.get<Item>(this.baseUrl + '/search/' + itemcode);
+    return this.http.get<Item>(this.baseUrl1 + itemcode);
     console.log(itemcode);
   }
 

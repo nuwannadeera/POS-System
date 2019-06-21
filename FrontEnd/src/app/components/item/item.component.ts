@@ -75,7 +75,7 @@ export class ItemComponent implements OnInit {
   }
 
 
-  searchCustomer (): void {
+  searchitem (): void {
     this.itemService.searchItem(this.selectitem.itemcode).subscribe(
       (result) => {
         console.log('search item working.......');
@@ -86,7 +86,7 @@ export class ItemComponent implements OnInit {
   }
 
 
-  deleteCustomer (): void {
+  deleteItem (): void {
     if (confirm('Are you want to delete this item')) {
       console.log('delete btn working.....');
       this.itemService.deleteItem(this.selectitem.itemcode).subscribe(
@@ -98,6 +98,13 @@ export class ItemComponent implements OnInit {
         }
       );
     }
+  }
+
+
+
+  tblRowClick(item: Item): void {
+    this.selectitem = Object.assign({}, item);
+    console.log('clicked table row is..' + this.selectitem);
   }
 
 

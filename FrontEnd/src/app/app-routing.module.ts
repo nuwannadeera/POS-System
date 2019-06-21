@@ -8,9 +8,6 @@ import {ItemComponent} from './components/item/item.component';
 
 const routes: Routes = [
   {
-    path: '', component: SidebarComponent
-  },
-  {
     path: '', component: DashboardComponent
   },
   {
